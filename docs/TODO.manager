@@ -1,0 +1,26 @@
+QCI Manager
+-----------
+
+Functions
+---------
+
+Aggregate client status to DB
+
+    Query each registered client via SNMP at fixed intervals (or on
+    demand) and update information in the database.
+
+Establish API for web ui
+
+    The web ui will populate the administrative field for each node,
+    but in order to facilitate on-demand updating of the SNMP
+    information and the triggering of SNMP sets, the Manager will
+    require a programmatic interface.
+
+DHCP Management
+
+    We need to assign different subnets for registered and
+    unregistered hosts. Registered meaning, named and located in the
+    web interface. This will mean scraping logs for new leases / MAC
+    addresses and creating Node objects and when queued by the web ui,
+    registering a static DHCP entry and hostname and triggering
+    release / renew.

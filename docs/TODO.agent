@@ -1,0 +1,44 @@
+QCI Agent
+---------
+
+QuakeCon Imaging - SNMP Agent
+
+Functions
+---------
+
+Delegate MIB to NetSNMP via *AgentX* or *Pass*
+
+    Claim an unused MIB tree and present this via one of the peering
+    protocols for SNMP.
+
+Encapsulate SNMP Sets and Gets as functions in a class
+
+    Python up the implementation as a mini-framework. Sub-classing
+    *Agent* and defining methods should automatically enable nodes for
+    query. This should also allow for things like auto-enumeration of
+    the MIB via class introspection.
+
+Async socket server for ui
+
+    Support query of ui internals via optional socket connection.
+
+Spawn ui on demand
+
+    If the UI is not available, we should allow it to be spawned.
+
+Checks to implement
+-------------------
+
+* gets
+
+ * Current user / revision (from file)
+ * Current match (parse replay filename?)
+ * ui status (connected, disconnected)
+
+* sets
+
+ * Save / Load Image (write command file)
+ * Reboot Host (client ui, to warn user)
+ * Identify host (client ui to flash screen, make noise,
+   change box color, etc.)
+ * Release / renew IP addr
