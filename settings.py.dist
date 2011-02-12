@@ -1,3 +1,5 @@
+import os
+
 # SqlAlchemy Settings
 QCI_DB_STRING = "sqlite://"
 
