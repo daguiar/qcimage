@@ -1,0 +1,9 @@
+# SqlAlchemy Settings
+QCI_DB_STRING = "sqlite://"
+
+# Flask Settings
+DEBUG = True
+SECRET_KEY = "n0nPr0duc710n"
+
+# Useful Paths
+BASE_PATH = "/".join(os.path.abspath(__file__).split("/")[:-1])

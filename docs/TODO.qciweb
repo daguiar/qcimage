@@ -1,0 +1,36 @@
+QCI Web UI
+----------
+
+This component should provide the visualization interface for the
+Manager Data.
+
+Goals
+-----
+
+* Somewhat interactive (using JS * JSON-RPC)
+
+Views
+-----
+
+**Node List** 
+
+       A `Node List`_ interface, providing a simple list of nodes and
+       the most relevant data. This interface should allow for easy
+       clearing and rebooting of nodes and a link to the `Node
+       Detail`_ view.
+
+**Node Detail** 
+
+       All available information about a particular node and a method
+       of invoking all remote functions on that node.
+
+**Location View**
+
+       Overlayed node information on a model of the tourney floor
+       plan. Node groups and status should be distinct and links
+       provided to the `Node Detail`_ view.
+
+**Stats View**
+
+       Show some totals. Number of players, player revisions, nodes, matches,
+       etc. Used to toot our own horn at the end.
