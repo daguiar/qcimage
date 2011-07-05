@@ -33,15 +33,14 @@ Make sure it gets used
      grouping. Write documentation so they know how to use it.
     
 
-Parts
------
+Files
+=====
 
-1. Client UI (Client, Windows)
+/windows
 
-   * Save Image / Get Handle
+     Hierarchy that lives on the windows partition onthe Hard Drive
 
-2. Linux: the git Sherpa
+/scripts
 
-
-
+     Scripts to be run from the Linux USB environment
 
