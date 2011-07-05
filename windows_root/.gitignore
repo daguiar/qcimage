@@ -1,1 +1,6 @@
-# .gitignore file for the windows repository
+pagefile.sys
+hiberfil.sys
+Recovery
+PerfLogs
+System Volume Information
+$Recycle.Bin
