@@ -1,0 +1,8 @@
+* Disable Hibernation
+  Run "Command Prompt" as Administrator: powercfg -h off
+* Disable System Restore
+  [My Computer]->[Properties]->[System Protection]
+* Clear the pagefile on shutdown
+  regedt32:
+  HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session
+  Manager\Memory Management\ClearPageFileAtShutdown -> 1
