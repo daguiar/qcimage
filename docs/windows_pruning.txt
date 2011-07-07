@@ -6,3 +6,4 @@
   regedt32:
   HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session
   Manager\Memory Management\ClearPageFileAtShutdown -> 1
+* Delete Windows/Software Distribution/Downloads

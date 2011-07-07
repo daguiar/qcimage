@@ -9,4 +9,5 @@ function save_images {
 	#Expects output directory
 	ntfsclone ${INTERNAL_DISK}1 -o $1/windows.reserved.ntfs.img
 	ntfsclone ${INTERNAL_DISK}2 -o $1/windows.main.ntfs.img
+        partclone.extfs -b -C -s${INTERNAL_DISK}3 -o $1/linux.ext3.img
 }

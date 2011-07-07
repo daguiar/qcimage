@@ -36,11 +36,15 @@ Make sure it gets used
 Files
 =====
 
-/windows
+/windows_root
 
      Hierarchy that lives on the windows partition onthe Hard Drive
 
-/scripts
+/linux_root
 
-     Scripts to be run from the Linux USB environment
+    Customizations to the linux installation
+
+/shell
+
+     Shell functions definitions
 
