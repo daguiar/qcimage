@@ -1,9 +1,7 @@
 ## Repo Functions
 
-REPO_DIR=/windows
-
 function repo_init {
-    cd $REPO_DIR
+    cd $WINDOWS_DIR
     git init .
     cp -u /qcimage/windows_root/.gitignore .
     git add .
@@ -12,18 +10,18 @@ function repo_init {
 
 function update_repo {
    # Expects commit message as arg
-   cd $REPO_DIR
+   cd $WINDOWS_DIR
    git add .
    git commit -m $1
 }
 
 function set_diff_tag {
-    cd $REPO_DIR
+    cd $WINDOWS_DIR
     git tag diff-base
 }
 
 function repo_reset {
-    cd $REPO_DIR
+    cd $WINDOWS_DIR
     git reset --hard
 }
 
@@ -38,7 +36,7 @@ function generate_diff {
 
 function apply_diff {
     # Expects path to diff as arg
-    cd $REPO_DIR
+    cd $WINDOWS_DIR
     git checkout -b diff-tmp diff-base
     patch -p1 < $1
     git commit -m "diff applied"
