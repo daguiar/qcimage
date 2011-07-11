@@ -27,3 +27,8 @@ function umount_admin_snap {
   umount /mnt
   lvremove /dev/vg_adminflash/player-root
 }
+
+function make_player_key {
+  # Expects device name e.g. /dev/sdq
+  dd if=/images/player.mbr.img of=$1 count=1 bs=512
+}
