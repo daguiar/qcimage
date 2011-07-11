@@ -4,20 +4,10 @@ function repo_init {
     cd $WINDOWS_DIR
     git init .
     cp -u /qcimage/windows_root/.gitignore .
+    mv .git $REPO_DIR
+    echo "gitdir: $REPO_DIR" > .git
     git add .
     git commit -m "Initial import"
-}
-
-function update_repo {
-   # Expects commit message as arg
-   cd $WINDOWS_DIR
-   git add .
-   git commit -m $1
-}
-
-function set_diff_tag {
-    cd $WINDOWS_DIR
-    git tag diff-base
 }
 
 function repo_reset {
@@ -31,17 +21,14 @@ function generate_diff {
     # Expects two args: handle and output path
     # Requires that diff-base tag is set in repo
     output_path=$2/$1-`player_hash $1`.diff
-    git diff diff-base > $output_path
+    git diff --binary > $output_path
 }
 
 function apply_diff {
     # Expects path to diff as arg
     cd $WINDOWS_DIR
-    git checkout -b diff-tmp diff-base
-    patch -p1 < $1
-    git commit -m "diff applied"
-    git rebase master
-    git branch -d diff-tmp
+    git reset --hard
+    git apply $1
 }
 
 # Misc Helper Functions
