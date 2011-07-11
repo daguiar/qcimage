@@ -51,7 +51,7 @@ function player_hash {
 }
 
 function reload {
-   . /qcimage/scripts/git_functions.sh
+   . /etc/profile.d/qcimage.sh
 }
 
 
