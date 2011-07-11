@@ -1,5 +1,5 @@
 function save_mbr {
-  dd if=$INTERNAL_DISK of=$RAW_IMAGE_DIR/windows-mbr.raw.img bs=512 count=1
+  dd if=$INTERNAL_DISK of=$RAW_IMAGE_DIR/windows.mbr bs=512 count=1
 }
 
 function save_images {
@@ -10,11 +10,11 @@ function save_images {
 
 function clone_linux {
   mount_admin_snap
-  cp /qcimage/linux_root/etc/fstab /mnt/etc/
+  cp -f /qcimage/linux_root/etc/fstab /mnt/etc/
   rm -rf /mnt/images/*
   sed -i -e 's/sdb/sda/' /mnt/qcimage/shell/settings.sh
   umount /mnt
-  partclone.extfs -b -s/dev/vg_adminflash/player-flash -O/dev/$i{INTERNAL_DISK}3
+  partclone.extfs -b -s/dev/vg_adminflash/player-flash -O/dev/${INTERNAL_DISK}3
   umount_admin_snap
 }
 
@@ -25,10 +25,24 @@ function mount_admin_snap {
 
 function umount_admin_snap {
   umount /mnt
-  lvremove /dev/vg_adminflash/player-root
+  lvremove -f /dev/vg_adminflash/player-root
 }
 
 function make_player_key {
   # Expects device name e.g. /dev/sdq
   dd if=/images/player.mbr.img of=$1 count=1 bs=512
+  partprobe
 }
+
+function clone_new_machine {
+  dd if=${RAW_IMAGE_DIR}/windows.mbr of=${INTERNAL_DISK}
+  partprobe
+  cat /proc/paritions
+  echo Cloning Windows reserved partition to ${INTERNAL_DISK}1
+  ntfsclone $RAW_IMAGE_DIR/windows.reserved.ntfs.img -O ${INTERNAL_DISK}1
+  echo Cloning Windows main partition to ${INTERNAL_DISK}2
+  ntfsclone $RAW_IMAGE_DIR/windows.main.ntfs.img -O ${INTERNAL_DISK}2
+  echo Cloning Linux to ${INTERNAL_DISK}3
+  clone_linux
+}
+
