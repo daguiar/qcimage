@@ -6,7 +6,7 @@
 # Accessible filesystems, by reference, are maintained under '/dev/disk'
 # See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
 #
-UUID=d520be69-6c92-4ff2-a0f3-73e1db9b9ff4 /                       ext3    defaults,barrier=0,data=writeback,relatime      1 1
+/dev/sda3		 /                       ext4    defaults,barrier=0,data=writeback,relatime      1 1
 tmpfs                   /dev/shm                tmpfs   defaults        0 0
 devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
 sysfs                   /sys                    sysfs   defaults        0 0
