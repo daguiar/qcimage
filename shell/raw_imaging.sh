@@ -14,7 +14,7 @@ function save_images {
 function clone_linux {
   mount_admin_snap
   /bin/cp -f /qcimage/linux_root/etc/local-fstab /mnt/etc/fstab
-  /bin/cp -f /qcimage/linux_root/boot/grub2/grub.cfg /mnt/boot/grub2/grub.cfg
+  /bin/cp -f /qcimage/linux_root/boot/grub2/local-grub.cfg /mnt/boot/grub2/grub.cfg
   rm -rf /mnt/images/*
   sed -i -e 's/sdb/sda/' /mnt/qcimage/shell/settings.sh
   umount /mnt
