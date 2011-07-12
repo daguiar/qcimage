@@ -3,46 +3,59 @@ function save_mbr {
 }
 
 function save_images {
+  # This function makes new windows clone images
   save_mbr
-  ntfsclone ${INTERNAL_DISK}1 -o $RAW_IMAGE_DIR/windows.reserved.ntfs.img
+  ntfsclone ${INTERNAL_DISK}1 -O $RAW_IMAGE_DIR/windows.reserved.ntfs.img
   mount ${INTERAL_DISK}2 /mnt
   rm /mnt/pagefile.sys
   umount /mnt
-  ntfsclone ${INTERNAL_DISK}2 -o $RAW_IMAGE_DIR/windows.main.ntfs.img
+  ntfsclone ${INTERNAL_DISK}2 -O $RAW_IMAGE_DIR/windows.main.ntfs.img
 }
 
 function clone_linux {
+  # Takes a snapshot of admin linux and mounts it on /mnt
   mount_admin_snap
+  # Change a few things that makes the local linux different
   /bin/cp -f /qcimage/linux_root/etc/local-fstab /mnt/etc/fstab
   /bin/cp -f /qcimage/linux_root/boot/grub2/local-grub.cfg /mnt/boot/grub2/grub.cfg
-  /bin/cp -f /qcimage/linux_root/etc/sysconfig/network /mnt/etc/sysconfig/network
+  sed -i -e 's/adminflash/local-linux/' /mnt/etc/sysconfig/network
+  # Don't copy the ntfs images to the local linux partition
   rm -rf /mnt/images/*
-  sed -i -e 's/sdb/sda/' /mnt/qcimage/shell/settings.sh
   umount /mnt
+  # Clone the filesystem to it's new home
   partclone.extfs -b -s/dev/vg_adminflash/player-root -O${INTERNAL_DISK}3
+  # Cleanup
   umount_admin_snap
 }
 
 function mount_admin_snap {
+  # Create an LVM snapshot called player root of the adminflash root
+  # Use all the remaining free extents in the volume group
   lvcreate -s -nplayer-root -l100%FREE /dev/vg_adminflash/lv_root
   mount /dev/vg_adminflash/player-root /mnt
 }
 
 function umount_admin_snap {
+  # Umount and delete the snapshot
   umount /mnt
   lvremove -f /dev/vg_adminflash/player-root
 }
 
 function make_player_key {
-  # Expects device name e.g. /dev/sdq
+  # Expects device name e.g. /dev/sdq Grub will be installed on the
+  # device, and a partition created for FAT32 but the filesystem will
+  # not be created, we may be able to use "booted linux but player key
+  # has no filesystem" to automatically create the player diff the
+  # first time
   dd if=/images/player.mbr.img of=$1 count=1 bs=512
   partprobe
 }
 
 function clone_new_machine {
+  # Restore MBR containing three paritions (reserved, windows, linux)
   dd if=${RAW_IMAGE_DIR}/windows.mbr of=${INTERNAL_DISK}
+  # Rescan the MBR and create the new partition devices
   partprobe
-  cat /proc/paritions
   echo Cloning Windows reserved partition to ${INTERNAL_DISK}1
   ntfsclone $RAW_IMAGE_DIR/windows.reserved.ntfs.img -O ${INTERNAL_DISK}1
   echo Cloning Windows main partition to ${INTERNAL_DISK}2

@@ -1,3 +1,6 @@
+# This file holds the tunable variables, basically everything I
+# thought might conceivably change 
+
 INTERNAL_DISK=/dev/sda
 RAW_IMAGE_DIR=/images
 PLAYER_DIR=/joueur
