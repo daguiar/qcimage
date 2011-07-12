@@ -1,4 +1,4 @@
-INTERNAL_DISK=/dev/sdb
+INTERNAL_DISK=/dev/sda
 RAW_IMAGE_DIR=/images
 PLAYER_DIR=/joueur
 WINDOWS_DIR=/windows
