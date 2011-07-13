@@ -24,5 +24,24 @@ function init_player_settings {
     export HANDLE GUID DIFF
 }
 
-init_player_settings
-export INTERNAL_DISK PLAYER_DISK RAW_IMAGE_DIR PLAYER_DIR REPO_DIR WINDOWS_DIR
+function disk_type {
+	# Expects a mounted disk device as arg 1 returns fstype
+	mount -l |grep $1|cut -d" " -f5 -
+}
+
+function detect_settings {
+	if [ "`disk_type /dev/sdb1`" == "ext4" ]; then
+		QCIMAGE_MODE="admin"
+	else
+		QCIMAGE_MODE="player"
+	fi
+	if [ "$QCIMAGE_MODE" == "admin" ]; then
+		PLAYER_DISK=
+		PLAYER_DIR=
+	else
+		init_player_settings
+	fi
+}
+
+detect_settings
+export QCIMAGE_MODE INTERNAL_DISK PLAYER_DISK RAW_IMAGE_DIR PLAYER_DIR REPO_DIR WINDOWS_DIR
