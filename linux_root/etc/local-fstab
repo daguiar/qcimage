@@ -12,5 +12,5 @@ devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
 sysfs                   /sys                    sysfs   defaults        0 0
 proc                    /proc                   proc    defaults        0 0
 /dev/disk/by-label/windows /windows		ntfs-3g defaults,relatime	0 0
-/dev/disk/by-label/joueur /joueur			vfat	defaults 0 0
+/dev/sdb1		 /joueur		vfat	defaults,noauto 0 0
 tourney-server:/diff_backup /serveur		nfs	defaults,noauto 0 0

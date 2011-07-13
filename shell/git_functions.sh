@@ -10,35 +10,41 @@ function repo_init {
     git commit -m "Initial import"
 }
 
+function repo_update {
+    cd $WINDOWS_DIR
+    git add .
+    git commit -m""
+}
+
 function repo_reset {
     cd $WINDOWS_DIR
+    if [ -e $WINDOWS_DIR/.qcimage/reset ]; then
+	rm $WINDOWS_DIR/.qcimage/reset
+    fi
     git reset --hard
 }
 
 ## Diff Functions
 
 function generate_diff {
-    # Expects two args: handle and output path
-    # Requires that diff-base tag is set in repo
-    output_path=$2/$1-`player_hash $1`.diff
-    git diff --binary > $output_path
+    git diff --binary > $DIFF
 }
 
 function apply_diff {
-    # Expects path to diff as arg
     cd $WINDOWS_DIR
     git reset --hard
-    git apply $1
+    git apply $DIFF
 }
 
 # Misc Helper Functions
-
-function player_hash {
-    echo $1 |md5sum |awk '{print $1}'
-}
 
 function reload {
    . /etc/profile.d/qcimage.sh
 }
 
+function boot_windows {
+   grub2-reboot "Chainload Windows"
+   #reboot
+   echo "Ready to reboot!"
+}
 

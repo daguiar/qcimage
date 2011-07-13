@@ -41,14 +41,31 @@ function umount_admin_snap {
   lvremove -f /dev/vg_adminflash/player-root
 }
 
-function make_player_key {
+function init_player_key {
   # Expects device name e.g. /dev/sdq Grub will be installed on the
   # device, and a partition created for FAT32 but the filesystem will
   # not be created, we may be able to use "booted linux but player key
   # has no filesystem" to automatically create the player diff the
   # first time
-  dd if=/images/player.mbr.img of=$1 count=1 bs=512
-  partprobe
+  label=`sanitize $HANDLE`
+  mkfs.vfat -l $label ${PLAYER_DISK}1
+  mount /joueur
+  cp -r /windows/.qcimage /joueur
+  umount /joueur
+  init_player_settings
+}
+
+blank_player_key {
+    # This will be used to make new blank player keys
+    # Expects disk device as 1st. arg
+    dd if=/images/player.mbr.img of=$1 count=1 bs=512
+    partprobe
+}
+
+function sanitize {
+    # Placeholder function that will eventually strip out invalid
+    # characters and truncate handles into FAT32 Compatible FS label
+    echo $1
 }
 
 function clone_new_machine {
