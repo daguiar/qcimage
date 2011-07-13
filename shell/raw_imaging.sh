@@ -67,9 +67,10 @@ function make_new_admin_key {
 }
 
 function sanitize {
-    # Placeholder function that will eventually strip out invalid
-    # characters and truncate handles into FAT32 Compatible FS label
-    echo $1
+    # Truncate handle to FAT32 Compatible 11 char for label Lot's of
+    # weird charaters seem to work, IDK if we should strip other
+    # things
+    echo $1 | cut -n -b -11 -
 }
 
 function clone_new_machine {
