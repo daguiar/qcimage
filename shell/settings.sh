@@ -7,6 +7,10 @@ RAW_IMAGE_DIR=/images
 PLAYER_DIR=/joueur
 WINDOWS_DIR=/windows
 REPO_DIR=/repo
+QCIMAGE_MODE=
+HANDLE=
+GUID=
+DIFF=
 
 function init_player_settings {
     mount /joueur
@@ -21,7 +25,6 @@ function init_player_settings {
 	GUID=`cat ${PLAYER_DIR}/.qcimage/guid`
 	DIFF=${PLAYER_DIR}/.qcimage/diff
     fi
-    export HANDLE GUID DIFF
 }
 
 function disk_type {
@@ -30,7 +33,8 @@ function disk_type {
 }
 
 function detect_settings {
-	if [ "`disk_type /dev/sdb1`" == "ext4" ]; then
+	# See if what should be the player disk is actually /boot of the admin flash
+	if [ "`disk_type ${PLAYER_DISK}1`" == "ext4" ]; then
 		QCIMAGE_MODE="admin"
 	else
 		QCIMAGE_MODE="player"
@@ -45,3 +49,4 @@ function detect_settings {
 
 detect_settings
 export QCIMAGE_MODE INTERNAL_DISK PLAYER_DISK RAW_IMAGE_DIR PLAYER_DIR REPO_DIR WINDOWS_DIR
+export HANDLE GUID DIFF
