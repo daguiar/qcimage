@@ -64,6 +64,7 @@ function blank_player_key {
 
 function make_new_admin_key {
     # Placeholder for some awesome shit Iĺl thin of soon
+    /bin/false
 }
 
 function sanitize {

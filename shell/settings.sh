@@ -14,9 +14,9 @@ function init_player_settings {
 	# Failed to mount player key, this should happen when creating
 	# a diff
 	HANDLE=`cat $WINDOWS_DIR/.qcimage/handle`
-	GUID=`cat $WINDOWS_DIR/.acimage/guid`
+	GUID=`cat $WINDOWS_DIR/.qcimage/guid`
 	DIFF=
-    else [ -e ${PLAYER_DIR}/.qcimage ]; then
+    else
 	HANDLE=`cat ${PLAYER_DIR}/.qcimage/handle`
 	GUID=`cat ${PLAYER_DIR}/.qcimage/guid`
 	DIFF=${PLAYER_DIR}/.qcimage/diff
