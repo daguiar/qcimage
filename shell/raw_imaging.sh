@@ -55,11 +55,15 @@ function init_player_key {
   init_player_settings
 }
 
-blank_player_key {
+function blank_player_key {
     # This will be used to make new blank player keys
     # Expects disk device as 1st. arg
     dd if=/images/player.mbr.img of=$1 count=1 bs=512
     partprobe
+}
+
+function make_new_admin_key {
+    # Placeholder for some awesome shit Iĺl thin of soon
 }
 
 function sanitize {

@@ -1,5 +1,6 @@
 function qcimage_apply {
     repo_reset
+    apply_diff
     boot_windows
 }
 
