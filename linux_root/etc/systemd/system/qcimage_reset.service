@@ -1,0 +1,9 @@
+[Unit]
+Description=Reset local windows parition to clean state
+ConditionKernelCommandLine=reset
+
+[Service]
+ExecStart=/qcimage/shell/main.sh reset
+RemainAfterExit=yes
+TimeoutSec=0
+Type=oneshot
