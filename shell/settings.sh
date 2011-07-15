@@ -13,14 +13,12 @@ GUID=
 DIFF=
 
 function init_player_settings {
-    mount /joueur
-    if [ "$?" -ne "0" ]; then
-	# Failed to mount player key, this should happen when creating
-	# a diff
+    if [ ! -e $PLAYER_DIR/.qcimage ]; then
 	HANDLE=`cat $WINDOWS_DIR/.qcimage/handle`
 	GUID=`cat $WINDOWS_DIR/.qcimage/guid`
-	DIFF=
+	DIFF=${PLAYER_DIR}/.qcimage/diff
     else
+	# The absence of the directory indicates image creation
 	HANDLE=`cat ${PLAYER_DIR}/.qcimage/handle`
 	GUID=`cat ${PLAYER_DIR}/.qcimage/guid`
 	DIFF=${PLAYER_DIR}/.qcimage/diff
@@ -43,6 +41,9 @@ function detect_settings {
 		PLAYER_DISK=
 		PLAYER_DIR=
 	else
+		if [ -z "`mount -l -t vfat`" ]; then
+			mount $PLAYER_DIR
+		fi
 		init_player_settings
 	fi
 }
