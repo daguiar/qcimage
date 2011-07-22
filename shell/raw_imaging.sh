@@ -48,7 +48,7 @@ function init_player_key {
   # has no filesystem" to automatically create the player diff the
   # first time
   label=`sanitize $HANDLE`
-  mkfs.vfat -l $label ${PLAYER_DISK}1
+  dosfslabel ${PLAYER_DISK} $label
   mount /joueur
   cp -r /windows/.qcimage /joueur
   umount /joueur

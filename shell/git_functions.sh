@@ -43,7 +43,7 @@ function reload {
 }
 
 function boot_windows {
-   grub2-reboot "Chainload Windows"
+   grub2-reboot "Windows"
    #reboot
    echo "Ready to reboot!"
 }
