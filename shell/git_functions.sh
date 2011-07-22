@@ -28,12 +28,13 @@ function repo_reset {
 ## Diff Functions
 
 function generate_diff {
+    cd $WINDOWS_DIR
     git diff --binary > $DIFF
 }
 
 function apply_diff {
     cd $WINDOWS_DIR
-    git reset --hard
+    repo_reset
     git apply $DIFF
 }
 
