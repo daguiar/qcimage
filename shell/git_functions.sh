@@ -46,7 +46,7 @@ function reload {
 
 function boot_windows {
    grub2-reboot "Windows"
-   #reboot
+   reboot
    echo "Ready to reboot!"
 }
 
