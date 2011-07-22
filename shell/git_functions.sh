@@ -1,7 +1,12 @@
 ## Repo Functions
 
 function repo_init {
+    mount $WINDOWS_DIR
     cd $WINDOWS_DIR
+    if [ -e .git ]; then
+	/bin/rm .git
+	/bin/rm -rf $REPO_DIR
+    fi
     git init .
     cp -u /qcimage/windows_root/.gitignore .
     mv .git $REPO_DIR
@@ -13,7 +18,7 @@ function repo_init {
 function repo_update {
     cd $WINDOWS_DIR
     git add .
-    git commit -m""
+    git commit -m"update"
 }
 
 function repo_reset {
