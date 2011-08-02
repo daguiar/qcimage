@@ -4,13 +4,8 @@ Recovery
 PerfLogs
 System Volume Information
 $Recycle.Bin
-Documents and Settings
-ProgramData/Application Data
-ProgramData/Desktop
-ProgramData/Documents
-ProgramData/Favorites
-ProgramData/Start Menu
-ProgramData/Templates
+Program Files/Steam/steamapps
+Users/All Users
 Users/Default/AppData/Local/Application Data
 Users/Default/AppData/Local/History
 Users/Default/AppData/Local/Temporary Internet Files
@@ -32,12 +27,25 @@ Users/Public/Documents/My Music
 Users/Public/Documents/My Pictures
 Users/Public/Documents/My Videos
 Users/tourney-user/AppData/Local/Application Data
+Users/tourney-user/AppData/Local/History
+Users/tourney-user/AppData/Local/Temporary Internet Files
 Users/tourney-user/Application Data
+Users/tourney-user/Cookies
 Users/tourney-user/Documents/My Music
 Users/tourney-user/Documents/My Pictures
 Users/tourney-user/Documents/My Videos
+Users/tourney-user/Local Settings
 Users/tourney-user/My Documents
 Users/tourney-user/NetHood
 Users/tourney-user/PrintHood
+Users/tourney-user/Recent
 Users/tourney-user/SendTo
+Users/tourney-user/Start Menu
 Users/tourney-user/Templates
+Documents and Settings
+ProgramData/Application Data
+ProgramData/Desktop
+ProgramData/Documents
+ProgramData/Favorites
+ProgramData/Start Menu
+ProgramData/Templates
