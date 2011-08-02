@@ -19,9 +19,6 @@ function clone_linux {
   /bin/cp -f /qcimage/linux_root/etc/local-fstab /mnt/etc/fstab
   /bin/cp -f /qcimage/linux_root/boot/grub2/local-grub.cfg /mnt/boot/grub2/grub.cfg
   sed -i -e 's/adminflash/local-linux/' /mnt/etc/sysconfig/network
-  # Reinstall grub
-  grub2-install --root-directory=/mnt --no-floppy $INTERNAL_DISK
-  cp /qcimage/linux_root/boot/grub2/altcmp.mod /mnt/boot/grub2
   # Don't copy the ntfs images to the local linux partition
   rm -rf /mnt/images/*
   umount /mnt
@@ -29,6 +26,11 @@ function clone_linux {
   partclone.extfs -b -s/dev/vg_adminflash/player-root -O${INTERNAL_DISK}3
   # Cleanup
   umount_admin_snap
+  mount /dev/sda3 /mnt
+  # Reinstall grub
+  grub2-install --root-directory=/mnt --no-floppy $INTERNAL_DISK
+  cp /qcimage/linux_root/boot/grub2/altcmp.mod /mnt/boot/grub2
+  umount /mnt
 }
 
 function mount_admin_snap {
