@@ -2,7 +2,7 @@
 # thought might conceivably change 
 
 INTERNAL_DISK=/dev/sda
-PLAYER_DISK=/dev/sdb
+PLAYER_DISK=/dev/sdb1
 RAW_IMAGE_DIR=/images
 PLAYER_DIR=/joueur
 WINDOWS_DIR=/windows
