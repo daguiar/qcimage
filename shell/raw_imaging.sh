@@ -62,11 +62,6 @@ function blank_player_key {
     partprobe
 }
 
-function make_new_admin_key {
-    # Placeholder for some awesome shit Iĺl thin of soon
-    /bin/false
-}
-
 function sanitize {
     # Truncate handle to FAT32 Compatible 11 char for label Lot's of
     # weird charaters seem to work, IDK if we should strip other
@@ -87,3 +82,23 @@ function clone_new_machine {
   clone_linux
 }
 
+function clone_admin_key {
+  dd if=/dev/sdb of=$1 bs=512 count=1
+  partprobe
+  umount /boot
+  partclone.extfs -b -s/dev/sdb1 -O${1}1
+  mount /boot
+  pvcreate ${1}2
+  vgcreate -s32M vg_adminflash_new ${1}2
+  lvcreate -l843 -n lv_root vg_adminflash_new
+  mount_admin_snap
+  umount /mnt
+  partclone.extfs -b -s/dev/vg_adminflash/player-root -O/dev/vg_adminflash_new/lv_root
+  umount_admin_snap
+  vgrename vg_adminflash vg_adminflash_orig
+  vgrename vg_adminflash_new vg_adminflash
+  vgchange -an vg_adminflash
+  sync
+  getkey -m "New key is ready, please unplug it and press any key"
+  vgrename vg_adminflash_orig vg_adminflash
+}
