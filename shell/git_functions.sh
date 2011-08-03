@@ -29,13 +29,17 @@ function repo_reset {
     git reset --hard
     git clean -f
     /bin/rm -rf $WINDOWS_DIR/.qcimage
+    mkdir $WINDOWS_DIR/.qcimage
 }
 
 ## Diff Functions
 
 function generate_diff {
     cd $WINDOWS_DIR
-    git diff --binary > $DIFF
+    git add .
+    git commit -m "fake"
+    git diff --binary HEAD^1 > $DIFF
+    git reset HEAD^1
 }
 
 function apply_diff {
