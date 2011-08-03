@@ -45,7 +45,7 @@ function generate_diff {
 function apply_diff {
     cd $WINDOWS_DIR
     repo_reset
-    git apply $DIFF
+    git apply --reject $DIFF
 }
 
 # Misc Helper Functions
