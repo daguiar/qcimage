@@ -28,6 +28,7 @@ function repo_reset {
     fi
     git reset --hard
     git clean -f
+    /bin/rm -rf $WINDOWS_DIR/.qcimage
 }
 
 ## Diff Functions
