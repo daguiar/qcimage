@@ -55,9 +55,7 @@ function init_player_key {
   # first time
   label=`sanitize $HANDLE`
   dosfslabel ${PLAYER_DISK} $label
-  mount /joueur
   cp -r /windows/.qcimage /joueur
-  umount /joueur
   init_player_settings
 }
 
