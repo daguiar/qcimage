@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=QC Tourney
+Description=This theme is to make pretty pictures while grub does magic for QuakeCon Tournament Machines
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/qc_tourney
+ScriptFile=/usr/share/plymouth/themes/qc_tourney/qc_tourney.script
