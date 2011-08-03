@@ -8,6 +8,7 @@ function save_images {
   ntfsclone ${INTERNAL_DISK}1 -O $RAW_IMAGE_DIR/windows.reserved.ntfs.img
   mount ${INTERNAL_DISK}2 /mnt
   /bin/rm /mnt/pagefile.sys
+  /bin/rm /mnt/hiberfil.sys
   umount /mnt
   ntfsclone ${INTERNAL_DISK}2 -O $RAW_IMAGE_DIR/windows.main.ntfs.img
 }
