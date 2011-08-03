@@ -22,7 +22,7 @@ function repo_update {
 }
 
 function repo_reset {
-    plymouth message --text="Resetting Repository"
+    #plymouth message --text="Resetting Repository"
     cd $WINDOWS_DIR
     if [ -e $WINDOWS_DIR/.qcimage/reset ]; then
 	rm $WINDOWS_DIR/.qcimage/reset
@@ -36,7 +36,7 @@ function repo_reset {
 ## Diff Functions
 
 function generate_diff {
-    plymouth message --text="Generating Player Differential"
+    #plymouth message --text="Generating Player Differential"
     cd $WINDOWS_DIR
     git add .
     git commit -m "fake"
@@ -45,7 +45,7 @@ function generate_diff {
 }
 
 function apply_diff {
-    plymouth message --text="Applying Player Diff"
+    #plymouth message --text="Applying Player Diff"
     cd $WINDOWS_DIR
     repo_reset
     git apply --reject $DIFF
