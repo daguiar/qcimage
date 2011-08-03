@@ -38,7 +38,7 @@ function clone_linux {
 function mount_admin_snap {
   # Create an LVM snapshot called player root of the adminflash root
   # Use all the remaining free extents in the volume group
-  lvcreate -s -nplayer-root -l100%FREE /dev/vg_adminflash/lv_root
+  lvcreate -s -nplayer-root -l+20 /dev/vg_adminflash/lv_root
   mount /dev/vg_adminflash/player-root /mnt
 }
 
