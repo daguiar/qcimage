@@ -22,6 +22,7 @@ function clone_linux {
   sed -i -e 's/adminflash/local-linux/' /mnt/etc/sysconfig/network
   # Don't copy the ntfs images to the local linux partition
   rm -rf /mnt/images/*
+  rm -rf /lib/systemd/system/multi-user.target.wants/plymouth*
   umount /mnt
   # Clone the filesystem to it's new home
   partclone.extfs -b -s/dev/vg_adminflash/player-root -O${INTERNAL_DISK}3
