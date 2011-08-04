@@ -108,5 +108,6 @@ function sync_demos {
 function copy_demo_key {
   mount /dev/sdb1 /mnt
   cp /mnt/id_qctourney /etc
+  chmod 600 /etc/id_qctourney
   umount /mnt 
 }
