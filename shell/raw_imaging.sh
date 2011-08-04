@@ -100,3 +100,13 @@ function clone_admin_key {
   getkey -m "New key is ready, please unplug it and press any key"
   vgrename vg_adminflash_orig vg_adminflash
 }
+
+function sync_demos {
+  rsync -v -e "ssh -l quakecon_web -i /etc/id_qctourney" $WINDOWS_DIR/Users/tourney-user/AppData/LocalLow/id\ Software/lan/home/base3q/demos/* quakecon_web@static.quakecon.org:files/2011/demos
+}
+
+function copy_demo_key {
+  mount /dev/sdb1 /mnt
+  cp /mnt/id_qctourney /etc
+  umount /mnt 
+}

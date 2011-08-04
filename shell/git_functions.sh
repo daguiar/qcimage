@@ -24,6 +24,7 @@ function repo_update {
 function repo_reset {
     #plymouth message --text="Resetting Repository"
     cd $WINDOWS_DIR
+    sync_demos
     if [ -e $WINDOWS_DIR/.qcimage/reset ]; then
 	rm $WINDOWS_DIR/.qcimage/reset
     fi
