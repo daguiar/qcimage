@@ -1,0 +1,129 @@
+#! /usr/bin/env python
+
+import dircache
+import os
+import hashlib
+import array
+import paramiko
+
+config_file_remote = '/home/daguiar/quakecon/demos/a.cfg'
+config_file_local = "a.cfg"
+key_file = os.path.expanduser('~/.ssh/id_rsa')
+server_name = "dea.ecn.purdue.edu"
+user_name = "daguiar"
+
+def pull_current_config():
+    mykey = paramiko.RSAKey.from_private_key_file(key_file)
+    transport = paramiko.Transport((server_name, 22))
+    transport.connect(username = user_name, pkey = mykey)
+    sftp = paramiko.SFTPClient.from_transport(transport)
+    sftp.get(config_file_remote, config_file_local)
+    sftp.close()
+    transport.close()
+    return []
+
+def read_config(config_file):
+    if os.path.isfile(config_file):
+        f_config = open(config_file, 'r')
+        demo_dir = f_config.readline()
+        demo_dir = demo_dir.rstrip('\n')
+        repo_dir = f_config.readline()
+        repo_dir = repo_dir.rstrip('\n')
+        f_config.close()
+        return demo_dir, repo_dir
+    else:
+        return [], []
+    
+def read_hist(hist_file_name):
+    #Read in the history file being used to keep track of what files 
+    #have already been copied over to the server
+    if os.path.isfile(hist_file_name):
+        f_hist = open(hist_file_name,'r')
+        N_hist = f_hist.readline()
+        hist_files = f_hist.readline()
+        hist_hashes = f_hist.readline()
+        
+        for i in range(1,int(N_hist)):
+            hist_files = [hist_files, f_hist.readline()]
+            hist_hashes = [hist_hashes, f_hist.readline()]
+        f_hist.close()
+        return hist_files, hist_hashes
+    else:
+        return [], []
+
+def upload_file(file_name, demo_dir, repo_dir):
+    privatekeyfile = os.path.expanduser(key_file)
+    mykey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
+    transport = paramiko.Transport((server_name, 22))
+    transport.connect(username = user_name, pkey = mykey)
+    sftp = paramiko.SFTPClient.from_transport(transport)
+    
+    remote_path = repo_dir + '/' + file_name
+    local_path = demo_dir + '/' + file_name
+    sftp.put(local_path, remote_path)
+    
+    sftp.close()
+    transport.close()
+    return []
+
+#Pull the current config file from the server
+pull_current_config()
+
+#Read the new config file
+demo_dir, repo_dir = read_config(config_file_local)
+
+#Read the history file
+hist_files, hist_hashes = read_hist("hist.txt")
+N_hist = len(hist_files)
+
+#Read the list of files in the desired directory
+file_list = dircache.listdir(demo_dir)
+N_files = len(file_list)
+
+update_flag = 0
+for file_name in file_list:
+    #Examine the file and compare it against the version in the hist file
+    file_string = file_name + '\n'
+    try:
+        i = hist_files.index(file_string)
+        hash_hist = hist_hashes[i]
+        
+        #Generate the hash for the file in question
+        file_path = demo_dir + '/' + file_name
+        infile = open(file_path, "r")
+        data = infile.read()
+        infile.close()
+        hash_file = hashlib.md5(data).hexdigest()
+        
+        #If the two hashes don't match, upload the file to the server and
+        #flag that a new history file needs to be written
+        if hash_file != hash_hist:
+            update_flag = 1
+            upload_file(file_name, demo_dir, repo_dir)
+    
+    #This means the file doesn't exist in the history file
+    except NameError:
+        update_flag = 1
+        upload_file(file_name, demo_dir, repo_dir)
+    except ValueError:
+        update_flag = 1
+        upload_file(file_name, demo_dir, repo_dir)
+    
+#If ANY of the files need updating, write a new history file
+if update_flag == 1:
+    f_hist = open('hist.txt','w')
+    s = str(N_files) + '\n'
+    f_hist.write(s)
+    for file_name in file_list:
+        file_string = file_name + '\n'
+        f_hist.write(file_string)
+        
+        #Generate the hash for the file in question
+        file_path = demo_dir + '/' + file_name
+        infile = open(file_path, "r")
+        data = infile.read()
+        infile.close()
+        hash_string = hashlib.md5(data).hexdigest() + '\n'
+        
+        f_hist.write(hash_string)
+    f_hist.close()
